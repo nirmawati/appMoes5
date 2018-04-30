@@ -8,7 +8,8 @@
     tools:context=".SignupActivity">
 
     <include
-        layout="@layout/app_bar_layout">
+        layout="@layout/app_bar_layout"
+        android:id="@+id/signup_toolbar">
     </include>
 
     <EditText

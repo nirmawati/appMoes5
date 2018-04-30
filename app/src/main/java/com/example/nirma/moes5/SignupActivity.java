@@ -36,15 +36,15 @@ public class SignupActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
-        mToolbar = findViewById(R.id.main_app_bar);
+        mToolbar = findViewById(R.id.signup_toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle("Sign Up");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        SignUpUserName = (EditText) findViewById(R.id.signup_name);
-        SignUpUserEmail = (EditText) findViewById(R.id.signup_email);
-        SignUpUserPass = (EditText) findViewById(R.id.signup_pass);
-        CreateAccountButton = (Button) findViewById(R.id.create_button);
+        SignUpUserName =  findViewById(R.id.signup_name);
+        SignUpUserEmail =  findViewById(R.id.signup_email);
+        SignUpUserPass =  findViewById(R.id.signup_pass);
+        CreateAccountButton =  findViewById(R.id.create_button);
         loadingBar = new ProgressDialog(this);
 
         CreateAccountButton.setOnClickListener(new View.OnClickListener() {
@@ -96,8 +96,5 @@ public class SignupActivity extends AppCompatActivity {
                     }
                 });
             }
-    }
-
-    public void setSupportActionBar(Toolbar mToolbar) {
     }
 }

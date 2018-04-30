@@ -16,8 +16,8 @@ public class StartPageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_page);
 
-        SignupButton = (Button) findViewById(R.id.signup_button);
-        LoginButton = (Button) findViewById(R.id.login_button);
+        SignupButton =  findViewById(R.id.signup_button);
+        LoginButton =  findViewById(R.id.login_button);
 
         SignupButton.setOnClickListener(new View.OnClickListener() {
             @Override
