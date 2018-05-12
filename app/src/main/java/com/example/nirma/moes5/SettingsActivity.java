@@ -22,6 +22,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
@@ -36,6 +37,8 @@ public class SettingsActivity extends AppCompatActivity
     private Button settingsChangeStatusButton;
 
     private final static int Gallery_Pick = 1;
+    private int changeImage = 0;
+
     private StorageReference storeProfileImageStorageRef;
 
     private DatabaseReference getUserDataReference;
@@ -70,6 +73,7 @@ public class SettingsActivity extends AppCompatActivity
 
                 settingsDisplayName.setText(name); //ubah nama user
                 settingsDisplayStatus.setText(status);
+                Picasso.with(SettingsActivity.this).load(image).into(settingsDisplayProfileImage);
             }
 
             @Override
@@ -97,7 +101,7 @@ public class SettingsActivity extends AppCompatActivity
     {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == Gallery_Pick && requestCode == RESULT_OK && data!=null)
+        if (requestCode == Gallery_Pick && data!=null)
         {
             Uri ImageUri = data.getData();
             CropImage.activity()
@@ -125,6 +129,15 @@ public class SettingsActivity extends AppCompatActivity
                         else
                         {
                             Toast.makeText(SettingsActivity.this, "Error occuret, while uploding your profile pic..", Toast.LENGTH_SHORT).show();
+                            String downloadUrl = task.getResult().getDownloadUrl().toString();
+                            getUserDataReference.child("user_image").setValue(downloadUrl).addOnCompleteListener(new OnCompleteListener<Void>()
+                            {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task)
+                                {
+                                    Toast.makeText(SettingsActivity.this, "Profile Image Updated Sucessfully..", Toast.LENGTH_SHORT).show();
+                                }
+                            });
                         }
                     }
                 });
