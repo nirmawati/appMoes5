@@ -46,28 +46,19 @@ public class AllUserActivity extends AppCompatActivity
     {
         super.onStart();
         FirebaseRecyclerAdapter<AllUsers, AllUsersViewHolder> firebaseRecyclerAdapter
-                = new FirebaseRecyclerAdapter<AllUsers, AllUsersViewHolder>
-                (
-                        AllUsers.class,
-                        R.layout.all_users_display_layout,
-                        AllUsersViewHolder.class,
-                        allUserDatabaseReference
-
-                )
-        {
+                = new FirebaseRecyclerAdapter<AllUsers, AllUsersViewHolder>() {
             @Override
-            protected void onBindViewHolder(@NonNull AllUsersViewHolder holder, int position, @NonNull AllUsers model)
-            {
-
+            protected void onBindViewHolder(@NonNull AllUsersViewHolder holder, int position, @NonNull AllUsers model) {
+                holder.set
             }
 
             @NonNull
             @Override
-            public AllUsersViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
-            {
+            public AllUsersViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
                 return null;
             }
         };
+
     }
 
     public static  class  AllUsersViewHolder extends RecyclerView.ViewHolder

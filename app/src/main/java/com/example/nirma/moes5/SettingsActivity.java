@@ -73,7 +73,10 @@ public class SettingsActivity extends AppCompatActivity
 
                 settingsDisplayName.setText(name); //ubah nama user
                 settingsDisplayStatus.setText(status);
-                Picasso.with(SettingsActivity.this).load(image).into(settingsDisplayProfileImage);
+                Picasso.get()
+                        .load(image)
+                        .placeholder(R.drawable.default_profile)
+                        .into(settingsDisplayProfileImage);
             }
 
             @Override
@@ -88,10 +91,10 @@ public class SettingsActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                Intent galleryIntent = new Intent();
-                galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
-                galleryIntent.setType("image/*");
-                startActivityForResult(galleryIntent, Gallery_Pick);
+                CropImage.activity()
+                        .setGuidelines(CropImageView.Guidelines.ON)
+                        .setAspectRatio(1,1)
+                        .start(SettingsActivity.this);
             }
         });
 
@@ -114,14 +117,6 @@ public class SettingsActivity extends AppCompatActivity
     {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == Gallery_Pick && data!=null)
-        {
-            Uri ImageUri = data.getData();
-            CropImage.activity()
-                    .setGuidelines(CropImageView.Guidelines.ON)
-                    .setAspectRatio(1,1)
-                    .start(this);
-        }
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE)
         {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
@@ -138,10 +133,6 @@ public class SettingsActivity extends AppCompatActivity
                         if (task.isSuccessful())
                         {
                             Toast.makeText(SettingsActivity.this, "Saving your profile image...", Toast.LENGTH_LONG).show();
-                        }
-                        else
-                        {
-                            Toast.makeText(SettingsActivity.this, "Error occuret, while uploding your profile pic..", Toast.LENGTH_SHORT).show();
                             String downloadUrl = task.getResult().getDownloadUrl().toString();
                             getUserDataReference.child("user_image").setValue(downloadUrl).addOnCompleteListener(new OnCompleteListener<Void>()
                             {
@@ -151,6 +142,11 @@ public class SettingsActivity extends AppCompatActivity
                                     Toast.makeText(SettingsActivity.this, "Profile Image Updated Sucessfully..", Toast.LENGTH_SHORT).show();
                                 }
                             });
+                        }
+                        else
+                        {
+                            Toast.makeText(SettingsActivity.this, "Error occuret, while uploding your profile pic..", Toast.LENGTH_SHORT).show();
+
                         }
                     }
                 });
