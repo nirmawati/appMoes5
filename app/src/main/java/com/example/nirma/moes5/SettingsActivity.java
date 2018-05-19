@@ -2,7 +2,6 @@ package com.example.nirma.moes5;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Debug;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -56,11 +55,11 @@ public class SettingsActivity extends AppCompatActivity
         getUserDataReference = FirebaseDatabase.getInstance().getReference().child("Users").child(online_user_id);
         storeProfileImageStorageRef = FirebaseStorage.getInstance().getReference().child("profile_image");
 
-        settingsDisplayProfileImage =  findViewById(R.id.settings_profile_image);
-        settingsDisplayName =  findViewById(R.id.settings_username);
-        settingsDisplayStatus =  findViewById(R.id.settings_user_status);
-        settingsChangeProfileImageButton = findViewById(R.id.change_image_button);
-        settingsChangeStatusButton =  findViewById(R.id.change_status_button);
+        settingsDisplayProfileImage = (CircleImageView) findViewById(R.id.settings_profile_image);
+        settingsDisplayName = (TextView) findViewById(R.id.settings_username);
+        settingsDisplayStatus = (TextView) findViewById(R.id.settings_user_status);
+        settingsChangeProfileImageButton = (Button) findViewById(R.id.change_image_button);
+        settingsChangeStatusButton = (Button) findViewById(R.id.change_status_button);
 
         getUserDataReference.addValueEventListener(new ValueEventListener()
         {
@@ -74,7 +73,6 @@ public class SettingsActivity extends AppCompatActivity
 
                 settingsDisplayName.setText(name); //ubah nama user
                 settingsDisplayStatus.setText(status);
-                //Picasso.with(SettingsActivity.this).load(image).into(settingsDisplayProfileImage);
                 Picasso.get()
                         .load(image)
                         .placeholder(R.drawable.default_profile)
@@ -95,7 +93,21 @@ public class SettingsActivity extends AppCompatActivity
             {
                 CropImage.activity()
                         .setGuidelines(CropImageView.Guidelines.ON)
+                        .setAspectRatio(1,1)
                         .start(SettingsActivity.this);
+            }
+        });
+
+        settingsChangeStatusButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                String old_status = settingsDisplayStatus.getText().toString();
+                Intent statusIntent = new Intent(SettingsActivity.this,StatusActivity.class);
+                statusIntent.putExtra("user_status", old_status);
+                startActivity(statusIntent);
+
             }
         });
     }
@@ -104,6 +116,7 @@ public class SettingsActivity extends AppCompatActivity
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         super.onActivityResult(requestCode, resultCode, data);
+
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE)
         {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
@@ -133,6 +146,7 @@ public class SettingsActivity extends AppCompatActivity
                         else
                         {
                             Toast.makeText(SettingsActivity.this, "Error occuret, while uploding your profile pic..", Toast.LENGTH_SHORT).show();
+
                         }
                     }
                 });
