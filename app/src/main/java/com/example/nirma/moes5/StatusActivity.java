@@ -10,7 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-import android.widget.Toolbar;
+import android.support.v7.widget.Toolbar;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -36,11 +36,11 @@ public class StatusActivity extends AppCompatActivity
 
         mAuth = FirebaseAuth.getInstance();
         String user_id  = mAuth.getCurrentUser().getUid();
-        changeStatusRef = FirebaseDatabase.getInstance().getReference().child("users").child(user_id);
+        changeStatusRef = FirebaseDatabase.getInstance().getReference().child("Users").child(user_id);
 
-        mToolbar = (Toolbar) findViewById(R.id.status_app_bar);
+        mToolbar = findViewById(R.id.status_app_bar);
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle("Change Satatus");
+        getSupportActionBar().setTitle("Change Status");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         saveChangesButton = (Button) findViewById(R.id.save_status_change_button);
@@ -82,6 +82,7 @@ public class StatusActivity extends AppCompatActivity
                     {
                         lodingBar.dismiss();
                         Intent settingsIntent = new Intent(StatusActivity.this, SettingsActivity.class);
+                        finish();
                         startActivity(settingsIntent);
 
                         Toast.makeText(StatusActivity.this, "Profile Status Updated Successfully...", Toast.LENGTH_LONG).show();
@@ -93,7 +94,5 @@ public class StatusActivity extends AppCompatActivity
                 }
             });
         }
-    }
-    private void setSupportActionBar(Toolbar mToolbar) {
     }
 }

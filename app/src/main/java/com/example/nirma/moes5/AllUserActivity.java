@@ -1,6 +1,7 @@
 package com.example.nirma.moes5;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -69,10 +70,20 @@ public class AllUserActivity extends AppCompatActivity
             }
 
             @Override
-            protected void onBindViewHolder(@NonNull AllUsersViewHolder holder, int position, @NonNull AllUsers model) {
+            protected void onBindViewHolder(@NonNull AllUsersViewHolder holder, final int position, @NonNull AllUsers model) {
                 holder.setUser_name(model.getUser_name());
                 holder.setUser_status(model.getUser_status());
-                holder.setUser_image(model.getUser_image());
+                holder.setUser_thumb_image(model.getUser_thumb_image());
+
+                holder.mView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String visit_user_id = getRef(position).getKey();
+                        Intent profileIntent = new Intent(AllUserActivity.this,ProfileActivity.class);
+                        profileIntent.putExtra("visit_user_id",visit_user_id);
+                        startActivity(profileIntent);
+                    }
+                });
             }
         };
         allUsersList.setAdapter(firebaseRecyclerAdapter);
@@ -100,12 +111,12 @@ public class AllUserActivity extends AppCompatActivity
             status.setText(user_status);
         }
 
-        public void  setUser_image(String user_image){
-            CircleImageView image = mView.findViewById(R.id.all_users_profile_image);
+        public void  setUser_thumb_image(String user_thumb_image){
+            CircleImageView thumb_image = mView.findViewById(R.id.all_users_profile_image);
             Picasso.get()
-                    .load(user_image)
+                    .load(user_thumb_image)
                     .placeholder(R.drawable.default_profile)
-                    .into(image);
+                    .into(thumb_image);
         }
     }
 }

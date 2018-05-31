@@ -166,7 +166,7 @@ public class SettingsActivity extends AppCompatActivity
 
                 ByteArrayOutputStream byteArrayOutputStreamStream = new ByteArrayOutputStream();
                 thumb_bitmap.compress(Bitmap.CompressFormat.JPEG, 50, byteArrayOutputStreamStream);
-                final  byte[] thumb_byte = byteArrayOutputStreamStream.toByteArray();
+                final byte[] thumb_byte = byteArrayOutputStreamStream.toByteArray();
 
                 String user_id = mAuth.getCurrentUser().getUid();
                 StorageReference filePath = storeProfileImageStorageRef.child(user_id + ".jpg");
@@ -217,6 +217,7 @@ public class SettingsActivity extends AppCompatActivity
                         else
                         {
                             Toast.makeText(SettingsActivity.this, "Error occuret, while uploding your profile pic..", Toast.LENGTH_SHORT).show();
+                            loadingBar.dismiss();
 
                         }
                     }
