@@ -35,20 +35,20 @@
         android:textSize="18sp" />
 
     <Button
-        android:id="@+id/cancle_request"
+        android:id="@+id/decline_request"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:text="Cancle Fried Request" />
+        android:text="Decline Friend Request" />
 
     <Button
         android:id="@+id/send_request"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/cancle_request"
-        android:layout_alignEnd="@+id/cancle_request"
-        android:layout_alignStart="@+id/cancle_request"
-        android:text="Send Fried Request" />
+        android:layout_above="@+id/decline_request"
+        android:layout_alignEnd="@+id/decline_request"
+        android:layout_alignStart="@+id/decline_request"
+        android:text="Send Friend Request" />
 
 </RelativeLayout>

@@ -24,6 +24,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
@@ -67,6 +69,8 @@ public class SettingsActivity extends AppCompatActivity
         mAuth = FirebaseAuth.getInstance();
         String online_user_id = mAuth.getCurrentUser().getUid();
         getUserDataReference = FirebaseDatabase.getInstance().getReference().child("Users").child(online_user_id);
+        getUserDataReference.keepSynced(true);
+
         storeProfileImageStorageRef = FirebaseStorage.getInstance().getReference().child("profile_image");
 
         thumbImageRef = FirebaseStorage.getInstance().getReference().child("Thumb_Images");
@@ -85,7 +89,7 @@ public class SettingsActivity extends AppCompatActivity
             {
                 String name = dataSnapshot.child("user_name").getValue().toString();
                 String status = dataSnapshot.child("user_status").getValue().toString();
-                String image = dataSnapshot.child("user_image").getValue().toString();
+                final String image = dataSnapshot.child("user_image").getValue().toString();
                 String thumb_image = dataSnapshot.child("user_thumb_image").getValue().toString();
 
                 settingsDisplayName.setText(name); //ubah nama user
@@ -93,10 +97,27 @@ public class SettingsActivity extends AppCompatActivity
 
                 if(!image.equals("default_profile"))
                 {
+
                     Picasso.get()
                             .load(image)
+                            .networkPolicy(NetworkPolicy.OFFLINE)
                             .placeholder(R.drawable.default_profile)
-                            .into(settingsDisplayProfileImage);
+                            .into(settingsDisplayProfileImage, new Callback() {
+                                @Override
+                                public void onSuccess()
+                                {
+
+                                }
+
+                                @Override
+                                public void onError(Exception e)
+                                {
+                                    Picasso.get()
+                                            .load(image)
+                                            .placeholder(R.drawable.default_profile)
+                                            .into(settingsDisplayProfileImage);
+                                }
+                            });
                 }
             }
 

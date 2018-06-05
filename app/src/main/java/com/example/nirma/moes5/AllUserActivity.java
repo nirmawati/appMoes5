@@ -18,6 +18,8 @@ import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -26,7 +28,7 @@ public class AllUserActivity extends AppCompatActivity
 {
     private Toolbar mToolbar;
     private RecyclerView allUsersList;
-    private DatabaseReference allUserDatabaseReference;
+    private DatabaseReference allDatabaseUserReference;
 
     Query query = FirebaseDatabase.getInstance()
             .getReference()
@@ -47,6 +49,9 @@ public class AllUserActivity extends AppCompatActivity
         allUsersList = (RecyclerView) findViewById(R.id.all_users_list);
         allUsersList.setHasFixedSize(true);
         allUsersList.setLayoutManager(new LinearLayoutManager(this));
+
+        allDatabaseUserReference = FirebaseDatabase.getInstance().getReference().child("user");
+        allDatabaseUserReference.keepSynced(true);
     }
 
     FirebaseRecyclerOptions<AllUsers> options =
@@ -111,12 +116,29 @@ public class AllUserActivity extends AppCompatActivity
             status.setText(user_status);
         }
 
-        public void  setUser_thumb_image(String user_thumb_image){
-            CircleImageView thumb_image = mView.findViewById(R.id.all_users_profile_image);
+        public void  setUser_thumb_image(final String user_thumb_image){
+            final CircleImageView thumb_image = mView.findViewById(R.id.all_users_profile_image);
+
             Picasso.get()
                     .load(user_thumb_image)
+                    .networkPolicy(NetworkPolicy.OFFLINE) //Bisa liat profil saat offline
                     .placeholder(R.drawable.default_profile)
-                    .into(thumb_image);
+                    .into(thumb_image, new Callback() {
+                        @Override
+                        public void onSuccess()
+                        {
+
+                        }
+
+                        @Override
+                        public void onError(Exception e)
+                        {
+                            Picasso.get()
+                                    .load(user_thumb_image)
+                                    .placeholder(R.drawable.default_profile)
+                                    .into(thumb_image);
+                        }
+                    });
         }
     }
 }
