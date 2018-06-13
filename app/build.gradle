@@ -37,6 +37,9 @@ dependencies {
     implementation 'com.firebaseui:firebase-ui-database:3.2.2'
     implementation 'id.zelory:compressor:2.1.0'
     implementation 'com.squareup.okhttp3:okhttp:3.10.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.4.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.10.0'
 
 }
 apply plugin: 'com.google.gms.google-services'
