@@ -1,6 +1,7 @@
 package com.example.nirma.moes5.network;
 
 import com.example.nirma.moes5.model.Penduduk;
+import com.example.nirma.moes5.model.Post;
 
 import java.util.List;
 
@@ -19,5 +20,8 @@ public interface Routes {
 
     @GET("kependudukan")
     Call<String> getPenduduk();
+
+    @GET("index.php/wp-json/wp/v2/posts")
+    Call<List<Post>> getPosts();
 
 }

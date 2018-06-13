@@ -16,4 +16,11 @@ public class Network {
                 .build();
     }
 
+    public static Retrofit requestWp() {
+        return new Retrofit.Builder()
+                .baseUrl("http://192.168.43.228/moes5Article/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+    }
+
 }

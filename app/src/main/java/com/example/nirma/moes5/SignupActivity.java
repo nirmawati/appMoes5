@@ -2,6 +2,7 @@ package com.example.nirma.moes5;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Debug;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -73,8 +74,10 @@ public class SignupActivity extends AppCompatActivity {
             public void onClick(View v)
             {
                 String nik = SignUpUserNik.getText().toString();
-//                isNikCorrect(nik);
-                test();
+
+                Toast.makeText(getApplicationContext(),"button click",Toast.LENGTH_SHORT);
+                isNikCorrect(nik);
+//                test();
             }
         });
     }
@@ -100,6 +103,7 @@ public class SignupActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<Penduduk>> call, Response<List<Penduduk>> response) {
                 if (response.isSuccessful()) {
+                    Toast.makeText(getApplicationContext(),"Create Account",Toast.LENGTH_SHORT);
                     if (response.body().size() > 0) {
                         Penduduk penduduk = response.body().get(0);
                         if (penduduk.getGender().equals("P")) {
