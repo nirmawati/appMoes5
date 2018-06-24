@@ -4,12 +4,11 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,7 +29,6 @@ import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
@@ -40,46 +38,52 @@ import java.util.Map;
 import de.hdodenhof.circleimageview.CircleImageView;
 import id.zelory.compressor.Compressor;
 
+/*
+    this class, handled user setting
+ */
 public class SettingsActivity extends AppCompatActivity
 {
-    private CircleImageView settingsDisplayProfileImage;
-    private TextView settingsDisplayName;
-    private TextView settingsDisplayStatus;
-    private Button settingsChangeProfileImageButton;
-    private Button settingsChangeStatusButton;
+    //UI
+    private CircleImageView profileImage;
+    private TextView userName;
+    private TextView userStatus;
+    private Button changeProfileImage;
+    private Button changeUserStatus;
+    private ProgressDialog loadingBar;
 
-    private final static int Gallery_Pick = 1;
-    private int changeImage = 0;
-
+    //Firebase DB
     private StorageReference storeProfileImageStorageRef;
-
     private DatabaseReference getUserDataReference;
     private FirebaseAuth mAuth;
-
     Bitmap thumb_bitmap = null;
     private StorageReference thumbImageRef;
-    private ProgressDialog loadingBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
+        //create layout
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
+        //Set firebase
         mAuth = FirebaseAuth.getInstance();
+        //get current user id
         String online_user_id = mAuth.getCurrentUser().getUid();
+        //get data
         getUserDataReference = FirebaseDatabase.getInstance().getReference().child("Users").child(online_user_id);
         getUserDataReference.keepSynced(true);
 
+        //get profile image
         storeProfileImageStorageRef = FirebaseStorage.getInstance().getReference().child("profile_image");
 
         thumbImageRef = FirebaseStorage.getInstance().getReference().child("Thumb_Images");
 
-        settingsDisplayProfileImage = (CircleImageView) findViewById(R.id.settings_profile_image);
-        settingsDisplayName = (TextView) findViewById(R.id.settings_username);
-        settingsDisplayStatus = (TextView) findViewById(R.id.settings_user_status);
-        settingsChangeProfileImageButton = (Button) findViewById(R.id.change_image_button);
-        settingsChangeStatusButton = (Button) findViewById(R.id.change_status_button);
+        //Get UI
+        profileImage = findViewById(R.id.profile_image);
+        userName = findViewById(R.id.username);
+        userStatus = findViewById(R.id.userstatus);
+        changeProfileImage = findViewById(R.id.change_image_button);
+        changeUserStatus = findViewById(R.id.change_status_button);
         loadingBar = new ProgressDialog(this);
 
         getUserDataReference.addValueEventListener(new ValueEventListener()
@@ -87,22 +91,24 @@ public class SettingsActivity extends AppCompatActivity
             @Override
             public void onDataChange(DataSnapshot dataSnapshot)
             {
+                //get data user from firebase
                 String name = dataSnapshot.child("user_name").getValue().toString();
                 String status = dataSnapshot.child("user_status").getValue().toString();
                 final String image = dataSnapshot.child("user_image").getValue().toString();
                 String thumb_image = dataSnapshot.child("user_thumb_image").getValue().toString();
 
-                settingsDisplayName.setText(name); //ubah nama user
-                settingsDisplayStatus.setText(status);
+                userName.setText(name); //ubah nama user
+                userStatus.setText(status); //ubah status user
 
+                //if not default profile image
                 if(!image.equals("default_profile"))
                 {
-
+                    //load image offline
                     Picasso.get()
                             .load(image)
                             .networkPolicy(NetworkPolicy.OFFLINE)
                             .placeholder(R.drawable.default_profile)
-                            .into(settingsDisplayProfileImage, new Callback() {
+                            .into(profileImage, new Callback() {
                                 @Override
                                 public void onSuccess()
                                 {
@@ -115,7 +121,7 @@ public class SettingsActivity extends AppCompatActivity
                                     Picasso.get()
                                             .load(image)
                                             .placeholder(R.drawable.default_profile)
-                                            .into(settingsDisplayProfileImage);
+                                            .into(profileImage);
                                 }
                             });
                 }
@@ -128,11 +134,13 @@ public class SettingsActivity extends AppCompatActivity
             }
         });
 
-        settingsChangeProfileImageButton.setOnClickListener(new View.OnClickListener()
+        //when click change image
+        changeProfileImage.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
+                //crop circle image
                 CropImage.activity()
                         .setGuidelines(CropImageView.Guidelines.ON)
                         .setAspectRatio(1,1)
@@ -140,12 +148,15 @@ public class SettingsActivity extends AppCompatActivity
             }
         });
 
-        settingsChangeStatusButton.setOnClickListener(new View.OnClickListener()
+        //when click change status
+        changeUserStatus.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-                String old_status = settingsDisplayStatus.getText().toString();
+                //get old staust
+                String old_status = userStatus.getText().toString();
+                //change activity to status
                 Intent statusIntent = new Intent(SettingsActivity.this,StatusActivity.class);
                 statusIntent.putExtra("user_status", old_status);
                 startActivity(statusIntent);
@@ -164,8 +175,9 @@ public class SettingsActivity extends AppCompatActivity
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if (resultCode == RESULT_OK)
             {
-                loadingBar.setTitle("Updating Profile Image");
-                loadingBar.setMessage("Please wait, while we are updating your profile image...");
+                //Set UI
+                loadingBar.setTitle("Mengubah gambar");
+                loadingBar.setMessage("Mohon tunggu, sedang dalam proses");
                 loadingBar.show();
 
                 Uri resultUri = result.getUri();
@@ -174,6 +186,7 @@ public class SettingsActivity extends AppCompatActivity
 
                 try
                 {
+                    //compress image
                     thumb_bitmap = new Compressor(this)
                             .setMaxWidth(200)
                             .setMaxHeight(200)
@@ -189,12 +202,11 @@ public class SettingsActivity extends AppCompatActivity
                 thumb_bitmap.compress(Bitmap.CompressFormat.JPEG, 50, byteArrayOutputStreamStream);
                 final byte[] thumb_byte = byteArrayOutputStreamStream.toByteArray();
 
+                //get user id
                 String user_id = mAuth.getCurrentUser().getUid();
+                //set to firebase
                 StorageReference filePath = storeProfileImageStorageRef.child(user_id + ".jpg");
                 final StorageReference thumb_filePath = thumbImageRef.child(user_id + ".jpg");
-
-
-
 
                 filePath.putFile(resultUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>()
                 {
@@ -203,7 +215,7 @@ public class SettingsActivity extends AppCompatActivity
                     {
                         if (task.isSuccessful())
                         {
-                            Toast.makeText(SettingsActivity.this, "Saving your profile image...", Toast.LENGTH_LONG).show();
+                            Toast.makeText(SettingsActivity.this, "Menyimpan gambar...", Toast.LENGTH_LONG).show();
 
                             final String downloadUrl = task.getResult().getDownloadUrl().toString();
                             UploadTask uploadTask = thumb_filePath.putBytes(thumb_byte);
@@ -219,27 +231,23 @@ public class SettingsActivity extends AppCompatActivity
                                         update_user_data.put("user_image",downloadUrl);
                                         update_user_data.put("user_thumb_image", thumb_downloadUrl);
 
-
                                         getUserDataReference.updateChildren(update_user_data).addOnCompleteListener(new OnCompleteListener<Void>()
                                         {
                                             @Override
                                             public void onComplete(@NonNull Task<Void> task)
                                             {
-                                                Toast.makeText(SettingsActivity.this, "Profile Image Updated Sucessfully..", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(SettingsActivity.this, "Gambar berhasil diubah", Toast.LENGTH_SHORT).show();
                                                 loadingBar.dismiss();
                                             }
                                         });
                                     }
                                 }
                             });
-
-
                         }
                         else
                         {
-                            Toast.makeText(SettingsActivity.this, "Error occuret, while uploding your profile pic..", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(SettingsActivity.this, "Maaf, ada kesalahan saat mengubah gambar", Toast.LENGTH_SHORT).show();
                             loadingBar.dismiss();
-
                         }
                     }
                 });

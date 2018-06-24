@@ -15,12 +15,11 @@ import retrofit2.http.Query;
 
 public interface Routes {
 
-    @GET("kependudukan")
+    //mengambil data dari kependudukan
+    @GET("penduduk")
     Call<List<Penduduk>> getPenduduk(@Query("nik") String nik);
 
-    @GET("kependudukan")
-    Call<String> getPenduduk();
-
+    //mengambil data dari wp-json
     @GET("index.php/wp-json/wp/v2/posts")
     Call<List<Post>> getPosts();
 

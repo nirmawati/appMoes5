@@ -1,9 +1,12 @@
 package com.example.nirma.moes5;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
+/*
+    This class is creating a splash screen
+ */
 public class WelcomeActivity extends AppCompatActivity {
 
     @Override
@@ -27,6 +30,7 @@ public class WelcomeActivity extends AppCompatActivity {
                 }
                 finally
                 {
+                    //move to start activity
                     Intent mainIntent = new Intent(WelcomeActivity.this, MainActivity.class);
                     startActivity(mainIntent);
 

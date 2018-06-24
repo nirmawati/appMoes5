@@ -2,6 +2,7 @@ package com.example.nirma.moes5.model;
 
 /**
  * Created by mvryan on 13/06/18.
+ * this class is model for article
  */
 
 public class Post {

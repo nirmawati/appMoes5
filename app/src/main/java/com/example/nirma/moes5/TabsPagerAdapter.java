@@ -1,12 +1,12 @@
 package com.example.nirma.moes5;
 
-import android.app.DownloadManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.google.firebase.FirebaseTooManyRequestsException;
-
+/*
+    this class handled fragment in main activity
+ */
 class TabsPagerAdapter extends FragmentPagerAdapter
 {
     public TabsPagerAdapter(FragmentManager fm)
@@ -14,11 +14,10 @@ class TabsPagerAdapter extends FragmentPagerAdapter
         super(fm);
     }
 
+    //list of fragment
     @Override
-    public Fragment getItem(int position)
-    {
-        switch (position)
-        {
+    public Fragment getItem(int position) {
+        switch (position) {
             case 0:
                 ChatsFragment chatsFragment = new ChatsFragment();
                 return chatsFragment;
@@ -29,27 +28,26 @@ class TabsPagerAdapter extends FragmentPagerAdapter
                 JFYFragment jfyFragment = new JFYFragment();
                 return jfyFragment;
 
-             default:
-                 return null;
+            default:
+                return null;
         }
     }
 
+    //many of fragment
     @Override
-    public int getCount()
-    {
+    public int getCount() {
         return 3 ;
     }
 
-    public CharSequence getPageTitle(int position)
-    {
-        switch (position)
-        {
+    //current position in fragment
+    public CharSequence getPageTitle(int position) {
+        switch (position) {
             case 0:
                 return "Chats";
             case 1:
-                return "Friends";
+                return "Teman";
             case 2:
-                return "JFY";
+                return "Just For You";
             default:
                 return null;
 

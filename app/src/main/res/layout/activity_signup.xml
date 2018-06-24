@@ -55,7 +55,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
         android:background="@color/colorAccent"
-        android:text="Create Account"
+        android:text="@string/daftar"
         android:textColor="@android:color/background_light"
         android:textSize="20sp"
         android:textStyle="bold" />

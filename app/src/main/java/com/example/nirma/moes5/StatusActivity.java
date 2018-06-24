@@ -2,15 +2,15 @@ package com.example.nirma.moes5;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-import android.support.v7.widget.Toolbar;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -23,7 +23,7 @@ public class StatusActivity extends AppCompatActivity
     private Toolbar mToolbar;
     private Button saveChangesButton;
     private EditText statusInput;
-    private ProgressDialog lodingBar;
+    private ProgressDialog loadingBar;
 
     private DatabaseReference changeStatusRef;
     private FirebaseAuth mAuth;
@@ -43,9 +43,9 @@ public class StatusActivity extends AppCompatActivity
         getSupportActionBar().setTitle("Change Status");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        saveChangesButton = (Button) findViewById(R.id.save_status_change_button);
-        statusInput = (EditText) findViewById(R.id.status_input);
-        lodingBar = new ProgressDialog(this);
+        saveChangesButton = findViewById(R.id.save_status_change_button);
+        statusInput = findViewById(R.id.status_input);
+        loadingBar = new ProgressDialog(this);
 
         String old_status = getIntent().getExtras().get("user_status").toString();
         statusInput.setText(old_status);
@@ -56,12 +56,12 @@ public class StatusActivity extends AppCompatActivity
             public void onClick(View v)
             {
                 String new_status = statusInput.getText().toString();
-                ChangeProfilStatus(new_status);
+                ChangeProfileStatus(new_status);
             }
         });
     }
 
-    private void ChangeProfilStatus(String new_status)
+    private void ChangeProfileStatus(String new_status)
     {
         if (TextUtils.isEmpty(new_status))
         {
@@ -69,9 +69,9 @@ public class StatusActivity extends AppCompatActivity
         }
         else
         {
-            lodingBar.setTitle("Change Profile Status");
-            lodingBar.setMessage("Please wait, while we are updating your profile status...");
-            lodingBar.show();
+            loadingBar.setTitle("Change Profile Status");
+            loadingBar.setMessage("Please wait, while we are updating your profile status...");
+            loadingBar.show();
 
             changeStatusRef.child("user_status").setValue(new_status)
                     .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -80,7 +80,7 @@ public class StatusActivity extends AppCompatActivity
                 {
                     if (task.isSuccessful())
                     {
-                        lodingBar.dismiss();
+                        loadingBar.dismiss();
                         Intent settingsIntent = new Intent(StatusActivity.this, SettingsActivity.class);
                         finish();
                         startActivity(settingsIntent);

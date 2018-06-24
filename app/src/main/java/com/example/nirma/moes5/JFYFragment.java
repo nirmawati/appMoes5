@@ -57,10 +57,10 @@ public class JFYFragment extends Fragment implements ArticleListener {
         routes = Network.requestWp().create(Routes.class);
         adapter = new ArticleAdapter(posts, this);
         lstArtcicles.setAdapter(adapter);
-        requestArtcicle();
+        requestArticle();
     }
 
-    private void requestArtcicle() {
+    private void requestArticle() {
         routes.getPosts().enqueue(new Callback<List<Post>>() {
             @Override
             public void onResponse(Call<List<Post>> call, Response<List<Post>> response) {

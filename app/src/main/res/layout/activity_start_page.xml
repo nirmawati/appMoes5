@@ -7,7 +7,6 @@
     android:background="@drawable/start_page"
     tools:context=".StartPageActivity">
 
-
     <Button
         android:id="@+id/signup_button"
         android:layout_width="320dp"
@@ -17,7 +16,7 @@
         android:layout_marginBottom="49dp"
         android:background="?android:attr/textColorLink"
         android:padding="10dp"
-        android:text="Need new account?"
+        android:text="@string/daftar"
         android:textColor="@android:color/white"
         android:textSize="20sp" />
 
@@ -30,7 +29,7 @@
         android:layout_marginBottom="116dp"
         android:background="?android:attr/textColorLink"
         android:padding="10dp"
-        android:text="Already Have An Account ?"
+        android:text="@string/masuk"
         android:textColor="@android:color/white"
         android:textSize="20sp" />
 </RelativeLayout>

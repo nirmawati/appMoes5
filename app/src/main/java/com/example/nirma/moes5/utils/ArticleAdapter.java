@@ -15,6 +15,7 @@ import java.util.List;
 
 /**
  * Created by mvryan on 13/06/18.
+ * this class handled to show the article
  */
 
 public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.Holder> {

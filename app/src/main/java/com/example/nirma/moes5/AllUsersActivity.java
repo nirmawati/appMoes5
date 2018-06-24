@@ -1,18 +1,18 @@
 package com.example.nirma.moes5;
 
-import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.support.v7.widget.Toolbar;
 
+import com.example.nirma.moes5.model.AllUsers;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DatabaseReference;
@@ -24,7 +24,7 @@ import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class AllUserActivity extends AppCompatActivity
+public class AllUsersActivity extends AppCompatActivity
 {
     private Toolbar mToolbar;
     private RecyclerView allUsersList;
@@ -46,7 +46,7 @@ public class AllUserActivity extends AppCompatActivity
         getSupportActionBar().setTitle("All Users");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        allUsersList = (RecyclerView) findViewById(R.id.all_users_list);
+        allUsersList = findViewById(R.id.all_users_list);
         allUsersList.setHasFixedSize(true);
         allUsersList.setLayoutManager(new LinearLayoutManager(this));
 
@@ -84,7 +84,7 @@ public class AllUserActivity extends AppCompatActivity
                     @Override
                     public void onClick(View v) {
                         String visit_user_id = getRef(position).getKey();
-                        Intent profileIntent = new Intent(AllUserActivity.this,ProfileActivity.class);
+                        Intent profileIntent = new Intent(AllUsersActivity.this, ProfileActivity.class);
                         profileIntent.putExtra("visit_user_id",visit_user_id);
                         startActivity(profileIntent);
                     }

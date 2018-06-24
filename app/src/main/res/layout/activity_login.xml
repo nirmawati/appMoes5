@@ -44,7 +44,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
         android:background="@color/colorAccent"
-        android:text="Sign In"
+        android:text="@string/masuk"
         android:textColor="@android:color/background_light"
         android:textSize="20sp"
         android:textStyle="bold" />

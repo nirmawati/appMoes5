@@ -6,7 +6,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.OkHttp3Downloader;
 import com.squareup.picasso.Picasso;
 
-public class Moes5_Offline extends Application
+public class Moes5Offline extends Application
 {
     @Override
     public void onCreate()

@@ -1,5 +1,8 @@
-package com.example.nirma.moes5;
+package com.example.nirma.moes5.model;
 
+/*
+this model is handle user
+ */
 public class AllUsers
 {
     public String user_name;
