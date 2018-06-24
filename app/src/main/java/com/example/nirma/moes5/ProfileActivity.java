@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -51,7 +52,7 @@ public class ProfileActivity extends AppCompatActivity {
         FriendRequestReference = FirebaseDatabase.getInstance().getReference().child("Friend_Requests");
         FriendRequestReference.keepSynced(true);
 
-        FriendsReference = FirebaseDatabase.getInstance().getReference().child("friends");
+        FriendsReference = FirebaseDatabase.getInstance().getReference().child("Friends");
         FriendsReference.keepSynced(true);
 
         NotificationReference = FirebaseDatabase.getInstance().getReference().child("Notification");
@@ -171,7 +172,7 @@ public class ProfileActivity extends AppCompatActivity {
                 {
                     SendFriendRequestButton.setEnabled(false);
 
-                    if(CURRENT_STATE.equals("Not_Friends"));
+                    if(CURRENT_STATE.equals("not_friends"));
                     {
                         SendFriendRequestToAPerson();
                     }
@@ -303,6 +304,9 @@ public class ProfileActivity extends AppCompatActivity {
                 });
     }
 
+//    Bug on cannclerequest
+//    Not update from click cancle to sent req
+//    harus back dlu klo mau cancle
     private void CancelFriendRequest()
     {
         FriendRequestReference.child(sender_user_id).child(receiver_user_id).removeValue()
@@ -324,6 +328,7 @@ public class ProfileActivity extends AppCompatActivity {
                                             SendFriendRequestButton.setText("Send Friend Request");
 
                                             DisableDeclineRequest();
+
                                         }
                                     });
                         }
@@ -362,7 +367,7 @@ public class ProfileActivity extends AppCompatActivity {
                                                             public void onComplete(@NonNull Task<Void> task) {
                                                                 if (task.isSuccessful()){
                                                                     SendFriendRequestButton.setEnabled(true);
-                                                                    CURRENT_STATE = "Request_Sent";
+                                                                    CURRENT_STATE = "request_sent";
                                                                     SendFriendRequestButton.setText("Cancel Friend Request");
 
                                                                     DisableDeclineRequest();
