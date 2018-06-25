@@ -259,10 +259,10 @@ public class ProfileActivity extends AppCompatActivity {
     private void AcceptFriendRequest()
     {
         Calendar calForDate = Calendar.getInstance();
-        SimpleDateFormat currentDate = new SimpleDateFormat("DD-MMMM-YYYY");
+        SimpleDateFormat currentDate = new SimpleDateFormat("dd-MMMM-yyyy");
         final String saveCurrentDate = currentDate.format(calForDate.getTime());
 
-        FriendsReference.child(sender_user_id).child(receiver_user_id).setValue(saveCurrentDate)
+        FriendsReference.child(sender_user_id).child(receiver_user_id).child("date").setValue(saveCurrentDate)
                 .addOnSuccessListener(new OnSuccessListener<Void>()
                 {
                     @Override
@@ -323,12 +323,14 @@ public class ProfileActivity extends AppCompatActivity {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task)
                                         {
-                                            SendFriendRequestButton.setEnabled(true);
-                                            CURRENT_STATE = "not_friends";
-                                            SendFriendRequestButton.setText("Send Friend Request");
+                                            if(task.isSuccessful()){
+                                                SendFriendRequestButton.setEnabled(true);
+                                                CURRENT_STATE = "not_friends";
+                                                SendFriendRequestButton.setText("Send Friend Request");
 
-                                            DisableDeclineRequest();
+                                                DisableDeclineRequest();
 
+                                            }
                                         }
                                     });
                         }

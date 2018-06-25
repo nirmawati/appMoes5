@@ -1,17 +1,19 @@
   package com.example.nirma.moes5;
 
-
 import android.os.Bundle;
+import android.os.Debug;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.nirma.moes5.model.AllUsers;
+import com.example.nirma.moes5.model.Friends;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
@@ -39,11 +41,6 @@ public class FriendsFragment extends Fragment {
     private DatabaseReference usersReference;
     private FirebaseAuth mAuth;
 
-    Query query = FirebaseDatabase.getInstance()
-            .getReference()
-            .child("Friends")
-            .limitToLast(50);
-
     String onlineUserId;
 
     private View myMainView;
@@ -51,7 +48,6 @@ public class FriendsFragment extends Fragment {
     public FriendsFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -64,22 +60,30 @@ public class FriendsFragment extends Fragment {
 
         friendsReference = FirebaseDatabase.getInstance().getReference().child("Friends").child(onlineUserId);
         usersReference = FirebaseDatabase.getInstance().getReference().child("Users");
+        usersReference.keepSynced(true);
 
         myFriendList.setLayoutManager(new LinearLayoutManager(getContext()));
 
         // Inflate the layout for this fragment
         return myMainView;
     }
-    FirebaseRecyclerOptions<Friends> options = new FirebaseRecyclerOptions.Builder<Friends>()
-                      .setQuery(query, Friends.class)
-                      .build();
+
     @Override
     public void onStart() {
         super.onStart();
-        FirebaseRecyclerAdapter<Friends,FriendsViewHolder>firebaseRecyclerAdapter
+
+        Query query = friendsReference
+                .limitToLast(50);
+
+        FirebaseRecyclerOptions<Friends> options =
+                new FirebaseRecyclerOptions.Builder<Friends>()
+                        .setQuery(query, Friends.class)
+                        .build();
+
+        FirebaseRecyclerAdapter<Friends,FriendsViewHolder> firebaseRecyclerAdapter
                   = new FirebaseRecyclerAdapter<Friends, FriendsViewHolder>(options) {
               @Override
-              protected void onBindViewHolder(@NonNull FriendsViewHolder holder, int position, @NonNull Friends model) {
+              protected void onBindViewHolder(@NonNull final FriendsViewHolder holder, int position, @NonNull final Friends model) {
                   holder.setDate(model.getDate());
 
                   String listUserId = getRef(position).getKey();
@@ -90,8 +94,14 @@ public class FriendsFragment extends Fragment {
                           String username = dataSnapshot.child("user_name").getValue().toString();
                           String thumbImage = dataSnapshot.child("thumb_image").getValue().toString();
 
-                          FriendsViewHolder.setUsername(username);
-                          FriendsViewHolder.setThumbImage(thumbImage);
+                          holder.setUsername(username);
+                          holder.setThumbImage(thumbImage);
+
+                          if (dataSnapshot.hasChild("online")){
+                              Boolean onlineStatus = (Boolean) dataSnapshot.child("online").getValue();
+
+                              holder.setUserOnline(onlineStatus);
+                          }
                       }
 
                       @Override
@@ -109,11 +119,13 @@ public class FriendsFragment extends Fragment {
               }
           };
         myFriendList.setAdapter(firebaseRecyclerAdapter);
+        firebaseRecyclerAdapter.startListening();
+
       }
 
-    public static class  FriendsViewHolder extends RecyclerView.ViewHolder{
+    public static class FriendsViewHolder extends RecyclerView.ViewHolder{
 
-        static View mView;
+        View mView;
 
         public FriendsViewHolder(View itemView) {
             super(itemView);
@@ -121,7 +133,7 @@ public class FriendsFragment extends Fragment {
             mView = itemView;
         }
 
-        public static void setThumbImage(final String thumbImage) {
+        public void setThumbImage(final String thumbImage) {
             final CircleImageView thumb_image = mView.findViewById(R.id.all_users_profile_image);
 
             Picasso.get()
@@ -148,10 +160,22 @@ public class FriendsFragment extends Fragment {
 
         public void setDate(String date){
             TextView sinceFriendData = mView.findViewById(R.id.all_users_status);
+            sinceFriendData.setText(date);
         }
 
-        public static void setUsername(String username){
+        public void setUsername(String username){
             TextView usernameFriends = mView.findViewById(R.id.all_users_username);
+            usernameFriends.setText(username);
+        }
+
+        public void setUserOnline(Boolean onlineStatus) {
+            ImageView onlineStatusView = mView.findViewById(R.id.online_status);
+
+            if (onlineStatus == true){
+                onlineStatusView.setVisibility(View.VISIBLE);
+            }else {
+                onlineStatusView.setVisibility(View.INVISIBLE);
+            }
         }
     }
   }

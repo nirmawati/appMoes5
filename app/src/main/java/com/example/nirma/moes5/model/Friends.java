@@ -1,4 +1,4 @@
-package com.example.nirma.moes5;
+package com.example.nirma.moes5.model;
 
 /**
  * Created by mvryan on 20/06/18.

@@ -90,7 +90,6 @@ public class SignupActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<Penduduk>> call, Response<List<Penduduk>> response) {
                 if (response.isSuccessful()) {
-                    ;
                     if (response.body().size() > 0) {
                         Penduduk penduduk = response.body().get(0);
                         //Cek this nik gender

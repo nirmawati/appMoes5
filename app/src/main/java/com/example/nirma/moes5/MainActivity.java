@@ -11,11 +11,15 @@ import android.view.MenuItem;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity {
 
     //Firebase
     private FirebaseAuth mAuth;
+    FirebaseUser currentUser;
+    private DatabaseReference usersReferences;
 
     //UI
     private ViewPager myViewPager;
@@ -31,6 +35,15 @@ public class MainActivity extends AppCompatActivity {
 
         //Set firebase
         mAuth = FirebaseAuth.getInstance();
+
+        //get my user account
+        currentUser = mAuth.getCurrentUser();
+
+        if (currentUser!=null){
+            String onlineUserId = mAuth.getCurrentUser().getUid();
+            usersReferences = FirebaseDatabase.getInstance().getReference()
+                    .child("Users").child(onlineUserId);
+        }
 
         //tabs untuk main actifity
         myViewPager =  findViewById(R.id.main_tabs_pager);
@@ -50,16 +63,25 @@ public class MainActivity extends AppCompatActivity {
     {
         super.onStart();
 
-        //get my user account
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-
         //if not user
         if (currentUser == null)
         {
             //log out
             LogOutUser();
+        }else if (currentUser!=null){
+            usersReferences.child("online").setValue(true);
         }
     }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        if (currentUser!=null){
+            usersReferences.child("online").setValue(false);
+        }
+    }
+
     private void LogOutUser()
     {
         //go to start activity

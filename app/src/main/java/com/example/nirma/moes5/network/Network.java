@@ -13,7 +13,7 @@ public class Network {
     //connect to sails js api penduduk
     public static Retrofit request() {
         return new Retrofit.Builder()
-                .baseUrl("http://192.168.0.101:1337/")
+                .baseUrl("http://192.168.0.102:1337/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
     }

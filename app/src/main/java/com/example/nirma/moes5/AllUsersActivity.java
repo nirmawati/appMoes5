@@ -30,11 +30,6 @@ public class AllUsersActivity extends AppCompatActivity
     private RecyclerView allUsersList;
     private DatabaseReference allDatabaseUserReference;
 
-    Query query = FirebaseDatabase.getInstance()
-            .getReference()
-            .child("Users")
-            .limitToLast(50);
-
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -50,19 +45,23 @@ public class AllUsersActivity extends AppCompatActivity
         allUsersList.setHasFixedSize(true);
         allUsersList.setLayoutManager(new LinearLayoutManager(this));
 
-        allDatabaseUserReference = FirebaseDatabase.getInstance().getReference().child("user");
+        allDatabaseUserReference = FirebaseDatabase.getInstance().getReference().child("Users");
         allDatabaseUserReference.keepSynced(true);
     }
-
-    FirebaseRecyclerOptions<AllUsers> options =
-            new FirebaseRecyclerOptions.Builder<AllUsers>()
-                    .setQuery(query, AllUsers.class)
-                    .build();
 
     @Override
     protected void onStart()
     {
         super.onStart();
+
+        Query query = allDatabaseUserReference
+                .limitToLast(50);
+
+        FirebaseRecyclerOptions<AllUsers> options =
+                new FirebaseRecyclerOptions.Builder<AllUsers>()
+                        .setQuery(query, AllUsers.class)
+                        .build();
+
         FirebaseRecyclerAdapter<AllUsers, AllUsersViewHolder> firebaseRecyclerAdapter
                 = new FirebaseRecyclerAdapter<AllUsers, AllUsersViewHolder>(options)
         {
