@@ -13,6 +13,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -69,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
             //log out
             LogOutUser();
         }else if (currentUser!=null){
-            usersReferences.child("online").setValue(true);
+            usersReferences.child("online").setValue("true");
         }
     }
 
@@ -78,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
         super.onStop();
 
         if (currentUser!=null){
-            usersReferences.child("online").setValue(false);
+            usersReferences.child("online").setValue(ServerValue.TIMESTAMP);
         }
     }
 
@@ -105,6 +106,12 @@ public class MainActivity extends AppCompatActivity {
         super.onOptionsItemSelected(item);
         //log out menu
         if (item.getItemId()== R.id.main_logout_button) {
+
+            if (currentUser != null)
+            {
+                usersReferences.child("online").setValue(ServerValue.TIMESTAMP);
+            }
+
             //log out from user
             mAuth.signOut();
             //change activity
