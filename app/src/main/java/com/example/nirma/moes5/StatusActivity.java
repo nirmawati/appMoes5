@@ -82,8 +82,8 @@ public class StatusActivity extends AppCompatActivity
                     {
                         loadingBar.dismiss();
                         Intent settingsIntent = new Intent(StatusActivity.this, SettingsActivity.class);
-                        finish();
                         startActivity(settingsIntent);
+                        finish();
 
                         Toast.makeText(StatusActivity.this, "Profile Status Updated Successfully...", Toast.LENGTH_LONG).show();
                     }

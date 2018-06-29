@@ -99,7 +99,7 @@ public class FriendsFragment extends Fragment {
                       public void onDataChange(final DataSnapshot dataSnapshot)
                       {
                           final String username = dataSnapshot.child("user_name").getValue().toString();
-                          String thumbImage = dataSnapshot.child("thumb_image").getValue().toString();
+                          String thumbImage = dataSnapshot.child("user_thumb_image").getValue().toString();
 
 
 
