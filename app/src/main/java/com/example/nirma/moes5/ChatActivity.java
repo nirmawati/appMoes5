@@ -12,11 +12,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
+import com.example.nirma.moes5.model.Messages;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -227,6 +227,7 @@ public class ChatActivity extends AppCompatActivity
             messageTextBody.put("seen",false);
             messageTextBody.put("type","text");
             messageTextBody.put("time", ServerValue.TIMESTAMP);
+            messageTextBody.put("from", messageSenderId);
 
             Map messageBodyDtails = new HashMap();
 

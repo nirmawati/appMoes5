@@ -13,7 +13,7 @@ public class Network {
     //connect to sails js api penduduk
     public static Retrofit request() {
         return new Retrofit.Builder()
-                .baseUrl("http://192.168.0.102:1337/")
+                .baseUrl("https://kependudukan-api.herokuapp.com/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
     }

@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.nirma.moes5.model.Friends;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -64,6 +65,7 @@ public class FriendsFragment extends Fragment {
         onlineUserId = mAuth.getCurrentUser().getUid();
 
         friendsReference = FirebaseDatabase.getInstance().getReference().child("Friends").child(onlineUserId);
+        friendsReference.keepSynced(true);
         usersReference = FirebaseDatabase.getInstance().getReference().child("Users");
         usersReference.keepSynced(true);
 
@@ -100,8 +102,6 @@ public class FriendsFragment extends Fragment {
                       {
                           final String username = dataSnapshot.child("user_name").getValue().toString();
                           String thumbImage = dataSnapshot.child("user_thumb_image").getValue().toString();
-
-
 
                           if (dataSnapshot.hasChild("online"))
                           {
@@ -141,6 +141,7 @@ public class FriendsFragment extends Fragment {
 
                                           if(position == 1)
                                           {
+                                              Toast.makeText(getContext(),"new message",Toast.LENGTH_LONG);
                                               if (dataSnapshot.child("online").exists())
                                               {
                                                   Intent chatIntent = new Intent(getContext(),ChatActivity.class);
@@ -196,7 +197,6 @@ public class FriendsFragment extends Fragment {
 
         public FriendsViewHolder(View itemView) {
             super(itemView);
-
             mView = itemView;
         }
 
@@ -227,7 +227,7 @@ public class FriendsFragment extends Fragment {
 
         public void setDate(String date){
             TextView sinceFriendData = mView.findViewById(R.id.all_users_status);
-            sinceFriendData.setText(date);
+            sinceFriendData.setText("Friends Since: \n" + date);
         }
 
         public void setUsername(String username){
