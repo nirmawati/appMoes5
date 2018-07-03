@@ -14,7 +14,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Toolbar;
+import android.support.v7.widget.Toolbar;
 
 import com.example.nirma.moes5.model.Messages;
 import com.google.firebase.auth.FirebaseAuth;
@@ -71,7 +71,7 @@ public class ChatActivity extends AppCompatActivity
         rootRef = FirebaseDatabase.getInstance().getReference();
 
         mAuth = FirebaseAuth.getInstance();
-        messageRecevierId = mAuth.getCurrentUser().getUid();
+        messageSenderId = mAuth.getCurrentUser().getUid();
 
         messageRecevierId = getIntent().getExtras().get("visit_user_id").toString();
         messageRecevierName =getIntent().getExtras().get("user_name").toString();
@@ -248,8 +248,5 @@ public class ChatActivity extends AppCompatActivity
                 }
             });
         }
-    }
-
-    private void setSupportActionBar(Toolbar chatToolbar) {
     }
 }

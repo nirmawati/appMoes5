@@ -323,7 +323,8 @@ public class ProfileActivity extends AppCompatActivity {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task)
                                         {
-                                            if(task.isSuccessful()){
+                                            if(task.isSuccessful())
+                                            {
                                                 SendFriendRequestButton.setEnabled(true);
                                                 CURRENT_STATE = "not_friends";
                                                 SendFriendRequestButton.setText("Send Friend Request");

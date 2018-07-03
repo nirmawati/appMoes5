@@ -27,6 +27,9 @@ class TabsPagerAdapter extends FragmentPagerAdapter
             case 2:
                 JFYFragment jfyFragment = new JFYFragment();
                 return jfyFragment;
+            case 3:
+                RequestsFragment requestsFragment = new RequestsFragment();
+                return requestsFragment;
 
             default:
                 return null;
@@ -36,7 +39,7 @@ class TabsPagerAdapter extends FragmentPagerAdapter
     //many of fragment
     @Override
     public int getCount() {
-        return 3 ;
+        return 4 ;
     }
 
     //current position in fragment
@@ -47,7 +50,9 @@ class TabsPagerAdapter extends FragmentPagerAdapter
             case 1:
                 return "Teman";
             case 2:
-                return "Just For You";
+                return "JFY";
+            case 3:
+                return "Requests";
             default:
                 return null;
 

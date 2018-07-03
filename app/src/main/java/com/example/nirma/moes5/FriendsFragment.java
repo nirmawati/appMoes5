@@ -91,7 +91,8 @@ public class FriendsFragment extends Fragment {
         FirebaseRecyclerAdapter<Friends,FriendsViewHolder> firebaseRecyclerAdapter
                   = new FirebaseRecyclerAdapter<Friends, FriendsViewHolder>(options) {
               @Override
-              protected void onBindViewHolder(@NonNull final FriendsViewHolder holder, final int position, @NonNull final Friends model) {
+              protected void onBindViewHolder(@NonNull final FriendsViewHolder holder, final int position, @NonNull final Friends model)
+              {
                   holder.setDate(model.getDate());
 
                   final String listUserId = getRef(position).getKey();
@@ -132,14 +133,14 @@ public class FriendsFragment extends Fragment {
                                       @Override
                                       public void onClick(DialogInterface dialog, int which)
                                       {
-                                          if(position == 0)
+                                          if(which == 0)
                                           {
                                               Intent profileIntent = new Intent(getContext(),ProfileActivity.class);
                                               profileIntent.putExtra("visit_user_id", listUserId);
                                               startActivity(profileIntent);
                                           }
 
-                                          if(position == 1)
+                                          if(which == 1)
                                           {
                                               Toast.makeText(getContext(),"new message",Toast.LENGTH_LONG);
                                               if (dataSnapshot.child("online").exists())

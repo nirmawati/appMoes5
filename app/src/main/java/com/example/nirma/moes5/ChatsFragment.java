@@ -96,9 +96,11 @@ public class ChatsFragment extends Fragment
         FirebaseRecyclerAdapter<Chats,ChatsViewHolder> firebaseRecyclerAdapter
                 = new FirebaseRecyclerAdapter<Chats, ChatsViewHolder>(options) {
             @Override
-            protected void onBindViewHolder(@NonNull final ChatsViewHolder holder, final int position, @NonNull final Chats model) {
+            protected void onBindViewHolder(@NonNull final ChatsViewHolder holder, final int position, @NonNull final Chats model)
+            {
 
                 final String listUserId = getRef(position).getKey();
+
 
                 usersReference.child(listUserId).addValueEventListener(new ValueEventListener() {
                     @Override
@@ -106,7 +108,6 @@ public class ChatsFragment extends Fragment
                     {
                         final String username = dataSnapshot.child("user_name").getValue().toString();
                         String thumbImage = dataSnapshot.child("user_thumb_image").getValue().toString();
-
                         String userStatus = dataSnapshot.child("user_status").getValue().toString();
 
                         if (dataSnapshot.hasChild("online"))
