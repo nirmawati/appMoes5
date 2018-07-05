@@ -197,7 +197,7 @@ public class ChatActivity extends AppCompatActivity
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == Gallery_Pick && requestCode == RESULT_OK && data != null)
+        if (requestCode == Gallery_Pick && resultCode == RESULT_OK && data != null)
         {
             loadingBar.setTitle("Sending Chat Image");
             loadingBar.setMessage("Mohon tunggu, sedang mengirim gambar");

@@ -2,9 +2,7 @@ package com.example.nirma.moes5;
 
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -17,7 +15,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.nirma.moes5.model.Friends;
+import com.example.nirma.moes5.model.Requests;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -29,13 +27,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
-import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
-import java.lang.ref.Reference;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -331,7 +327,8 @@ public class RequestsFragment extends Fragment
             @Override
             public RequestViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
             {
-                return null;
+                View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.friend_request_all_user_layout,parent,false);
+                return new RequestViewHolder(v);
             }
         };
         myRequestsList.setAdapter(firebaseRecyclerAdapter);
