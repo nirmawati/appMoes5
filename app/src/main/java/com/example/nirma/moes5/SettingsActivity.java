@@ -218,6 +218,7 @@ public class SettingsActivity extends AppCompatActivity
                             Toast.makeText(SettingsActivity.this, "Menyimpan gambar...", Toast.LENGTH_LONG).show();
 
                             final String downloadUrl = task.getResult().getDownloadUrl().toString();
+
                             UploadTask uploadTask = thumb_filePath.putBytes(thumb_byte);
                             uploadTask.addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>()
                             {

@@ -41,9 +41,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
+            android:hint="Write a Message..."
             android:inputType="textMultiLine"
-            android:padding="10dp"
-            android:text="Write a Message..." />
+            android:padding="10dp" />
 
         <ImageButton
             android:id="@+id/send_message"
