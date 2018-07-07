@@ -72,7 +72,7 @@ public class RequestsFragment extends Fragment
         UsersReference = FirebaseDatabase.getInstance().getReference().child("Users");
 
         FriendsDatabaseRef = FirebaseDatabase.getInstance().getReference().child("Friends");
-        FriendsReqDatabaseRef = FirebaseDatabase.getInstance().getReference().child("Friends_Requests");
+        FriendsReqDatabaseRef = FirebaseDatabase.getInstance().getReference().child("Friend_Requests");
 
         myRequestsList.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());

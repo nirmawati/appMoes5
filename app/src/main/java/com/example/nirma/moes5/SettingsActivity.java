@@ -58,12 +58,15 @@ public class SettingsActivity extends AppCompatActivity
     Bitmap thumb_bitmap = null;
     private StorageReference thumbImageRef;
 
+    public static SettingsActivity settingsActivity;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         //create layout
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+        settingsActivity=this;
 
         //Set firebase
         mAuth = FirebaseAuth.getInstance();

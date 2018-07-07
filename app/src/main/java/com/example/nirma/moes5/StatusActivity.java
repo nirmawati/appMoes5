@@ -82,6 +82,7 @@ public class StatusActivity extends AppCompatActivity
                     {
                         loadingBar.dismiss();
                         Intent settingsIntent = new Intent(StatusActivity.this, SettingsActivity.class);
+                        SettingsActivity.settingsActivity.finish();
                         startActivity(settingsIntent);
                         finish();
 

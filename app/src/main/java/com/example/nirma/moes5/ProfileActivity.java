@@ -115,8 +115,8 @@ public class ProfileActivity extends AppCompatActivity {
                                         DeclineFriendRequestButton.setOnClickListener(new View.OnClickListener() {
                                                 @Override
                                                 public void onClick(View v) {
-                                            DeclineFriendRequest();
-                                            }
+                                                    DeclineFriendRequest();
+                                                }
                                             });
                                     }
                                 }
@@ -172,30 +172,30 @@ public class ProfileActivity extends AppCompatActivity {
                 {
                     SendFriendRequestButton.setEnabled(false);
 
-                    if(CURRENT_STATE.equals("not_friends"));
-                    {
-                        SendFriendRequestToAPerson();
-                    }
-
-                    if (CURRENT_STATE.equals("request_sent"))
-                    {
-                        CancelFriendRequest();
-                    }
-
-                    if (CURRENT_STATE.equals("request_received"))
-                    {
-                        AcceptFriendRequest();
-                    }
-
-                    if (CURRENT_STATE.equals("friends"))
-                    {
-                        UnFriendaFriend();
+                    switch (CURRENT_STATE) {
+                        case "not_friends":
+                            Toast.makeText(getApplicationContext(), "Send friend request", Toast.LENGTH_LONG).show();
+                            SendFriendRequestToAPerson();
+                            break;
+                        case "request_sent":
+                            CancelFriendRequest();
+                            break;
+                        case "request_received":
+                            AcceptFriendRequest();
+                            break;
+                        case "friends":
+                            UnFriendaFriend();
+                            break;
+                        default:
+                            Toast.makeText(ProfileActivity.this, "hayoo apa hayoo", Toast.LENGTH_LONG).show();
+                            break;
                     }
                 }
             });
         }
         else
         {
+            //kita sebagai user
             DeclineFriendRequestButton.setVisibility(View.INVISIBLE);
             SendFriendRequestButton.setVisibility(View.INVISIBLE);
         }
@@ -328,6 +328,7 @@ public class ProfileActivity extends AppCompatActivity {
                                                 SendFriendRequestButton.setEnabled(true);
                                                 CURRENT_STATE = "not_friends";
                                                 SendFriendRequestButton.setText("Send Friend Request");
+                                                Toast.makeText(getApplicationContext(),"Sucess Cancel",Toast.LENGTH_LONG).show();
 
                                                 DisableDeclineRequest();
 
