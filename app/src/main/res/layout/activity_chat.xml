@@ -9,13 +9,13 @@
 
     <include
         android:id="@+id/chat_bar_layout"
-        layout="@layout/app_bar_layout">
-    </include>
+        layout="@layout/app_bar_layout"></include>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/message_list_of_user"
         android:layout_width="match_parent"
         android:layout_height="456dp"
+        android:background="@drawable/background_pesan2"
         android:layout_alignParentStart="true"
         android:layout_centerVertical="true"></android.support.v7.widget.RecyclerView>
 

@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/background_pesan2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".StatusActivity">
@@ -20,15 +21,17 @@
         android:layout_marginTop="107dp"
         android:ems="10"
         android:hint="Change Status Here..."
+        android:textColor="#000"
         android:inputType="textMultiLine"
-        android:padding="30dp" />
+        android:padding="30dp"
+        />
 
     <Button
         android:id="@+id/save_status_change_button"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:background="@color/colorAccent"
+        android:background="@drawable/bg_btn"
         android:text="Save Change"
         android:textColor="@android:color/background_light"
         android:textSize="18dp"
