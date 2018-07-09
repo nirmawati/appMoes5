@@ -7,10 +7,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.nirma.moes5.model.AllUsers;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -29,6 +33,8 @@ public class AllUsersActivity extends AppCompatActivity
     private Toolbar mToolbar;
     private RecyclerView allUsersList;
     private DatabaseReference allDatabaseUserReference;
+    private EditText SearchInputText;
+    private ImageButton SearchButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -41,20 +47,39 @@ public class AllUsersActivity extends AppCompatActivity
         getSupportActionBar().setTitle("All Users");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        SearchButton = findViewById(R.id.search_people_button);
+        SearchInputText = findViewById(R.id.search_input_text);
+
         allUsersList = findViewById(R.id.all_users_list);
         allUsersList.setHasFixedSize(true);
         allUsersList.setLayoutManager(new LinearLayoutManager(this));
 
         allDatabaseUserReference = FirebaseDatabase.getInstance().getReference().child("Users");
         allDatabaseUserReference.keepSynced(true);
+
+        SearchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                String searchUserName = SearchInputText.getText().toString();
+
+                if (TextUtils.isEmpty(searchUserName))
+                {
+                    Toast.makeText(AllUsersActivity.this, "Please write a user name to search..", Toast.LENGTH_SHORT).show();
+                }
+
+                SearchForPeopleAndFriends(searchUserName);
+            }
+        });
     }
 
-    @Override
-    protected void onStart()
-    {
-        super.onStart();
+    private void SearchForPeopleAndFriends(String searchUserName) {
 
-        Query query = allDatabaseUserReference
+        Toast.makeText(this, "Searching...", Toast.LENGTH_SHORT).show();
+
+        Query query = allDatabaseUserReference.orderByChild("user_name")
+                .startAt(searchUserName)
+                .endAt(searchUserName + "\uf8ff")
                 .limitToLast(50);
 
         FirebaseRecyclerOptions<AllUsers> options =

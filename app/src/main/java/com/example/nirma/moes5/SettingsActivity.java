@@ -58,12 +58,15 @@ public class SettingsActivity extends AppCompatActivity
     Bitmap thumb_bitmap = null;
     private StorageReference thumbImageRef;
 
+    public static SettingsActivity settingsActivity;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         //create layout
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+        settingsActivity=this;
 
         //Set firebase
         mAuth = FirebaseAuth.getInstance();
@@ -218,6 +221,7 @@ public class SettingsActivity extends AppCompatActivity
                             Toast.makeText(SettingsActivity.this, "Menyimpan gambar...", Toast.LENGTH_LONG).show();
 
                             final String downloadUrl = task.getResult().getDownloadUrl().toString();
+
                             UploadTask uploadTask = thumb_filePath.putBytes(thumb_byte);
                             uploadTask.addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>()
                             {

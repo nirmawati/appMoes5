@@ -11,7 +11,7 @@
     </item>
 
     <item
-        android:title="All Users"
+        android:title="Ta'aruf"
         android:id="@+id/main_all_users_button"
         app:showAsAction="never">
     </item>

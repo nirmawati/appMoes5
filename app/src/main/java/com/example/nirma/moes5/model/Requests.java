@@ -1,4 +1,4 @@
-package com.example.nirma.moes5;
+package com.example.nirma.moes5.model;
 
 public class Requests
 {
