@@ -5,16 +5,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="#fff"
     tools:context="com.example.nirma.moes5.ArticleDetailActivity">
 
     <TextView
         android:id="@+id/txt_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Sunnah Memotong Kuku"
+        android:textAlignment="center"
+        android:textColor="#000"
+        android:textSize="20dp" />
 
     <WebView
         android:id="@+id/wv_post"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="600dp"
+        android:layout_marginTop="25dp"/>
 
 </LinearLayout>

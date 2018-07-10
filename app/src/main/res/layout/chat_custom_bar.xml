@@ -3,38 +3,47 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="3dp"
-    android:background="@color/colorPrimary">
+    android:layout_marginTop="4dp"
+    android:background="@drawable/background_pesan2">
 
     <TextView
         android:id="@+id/custom_profile_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:text="Display User Name"
-        android:textColor="@android:color/background_light"
-        android:textSize="18sp"
-        android:textStyle="bold" />
+
+        android:layout_alignTop="@+id/custom_profile_image"
+        android:layout_marginStart="18dp"
+        android:text="@string/rina_zatulini"
+        android:textColor="@android:color/black"
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/custom_user_lastseen"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/custom_profile_name"
-        android:layout_marginTop="3dp"
-        android:text="Last Seen"
-        android:textColor="@android:color/background_light"
-        android:textSize="14sp"
-        android:textStyle="bold" />
+        android:layout_alignBottom="@+id/custom_profile_image"
+        android:layout_alignStart="@+id/custom_profile_name"
+        android:text="@string/last_seen"
+        android:textColor="@android:color/black"
+        android:textSize="14sp" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/custom_profile_image"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_alignBottom="@+id/custom_user_lastseen"
         android:layout_alignParentEnd="true"
-        android:layout_marginEnd="12dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="13dp"
+        android:layout_marginTop="13dp"
         android:src="@drawable/default_profile" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="71dp"
+        android:background="#000" />
+
 </RelativeLayout>
