@@ -8,21 +8,21 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_margin="15dp">
-        
+        android:layout_height="96dp"
+        android:layout_margin="15dp"
+        android:orientation="horizontal">
+
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/all_users_profile_image"
             android:layout_width="85dp"
             android:layout_height="85dp"
-            android:src="@drawable/default_profile"/>
+            android:src="@drawable/default_profile" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_margin="5dp">
+            android:layout_margin="5dp"
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -33,7 +33,7 @@
                     android:id="@+id/all_users_username"
                     android:layout_width="235dp"
                     android:layout_height="wrap_content"
-                    android:text="User Name"
+                    android:text="@string/username"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
@@ -41,20 +41,21 @@
                     android:id="@+id/online_status"
                     android:layout_width="15dp"
                     android:layout_height="15dp"
-                    android:visibility="invisible"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
                     android:src="@mipmap/ic_online_status"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="5dp"/>
+                    android:visibility="invisible"
+                    android:contentDescription="@string/todo" />
             </LinearLayout>
 
             <TextView
                 android:id="@+id/all_users_status"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="User Status"
-                android:textSize="15sp" />
-
+                android:text="Last Seen"
+                android:textSize="16sp" />
         </LinearLayout>
+
     </LinearLayout>
 
 </LinearLayout>
