@@ -6,32 +6,51 @@ package com.example.nirma.moes5.model;
  */
 
 public class Post {
-    private String link;
+    private String id;
+    private String image;
     private Title title;
+    private String category;
     private Content content;
-    private String slug;
-    private String date;
+    private Excerpt excerpt;
 
-    public String getLink() {
-        return link;
+    public Post(String id, String image, Title title, String category, Content content, Excerpt excerpt) {
+        this.id = id;
+        this.image = image;
+        this.title = title;
+        this.category = category;
+        this.content = content;
+        this.excerpt = excerpt;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public Title getTitle() {
         return title;
     }
 
+    public String getCategory() {
+        return category;
+    }
+
     public Content getContent() {
         return content;
     }
 
-    public String getSlug() {
-        return slug;
+    public Excerpt getExcerpt() {
+        return excerpt;
     }
 
-    public String getDate() {
-        return date;
-    }
+    public class Excerpt{
+        private String rendered;
 
+        public String getRendered(){return rendered;}
+    }
     public class Title {
         private String rendered;
 
@@ -47,4 +66,5 @@ public class Post {
             return rendered;
         }
     }
+
 }

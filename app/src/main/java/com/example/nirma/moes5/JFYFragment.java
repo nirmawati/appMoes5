@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,8 +36,10 @@ public class JFYFragment extends Fragment implements ArticleListener {
     private ArticleAdapter adapter;
     private Routes routes;
     private List<Post> posts;
+    private String idArtikel;
 
     public JFYFragment() {
+
         // Required empty public constructor
     }
 
@@ -57,6 +60,7 @@ public class JFYFragment extends Fragment implements ArticleListener {
         routes = Network.requestWp().create(Routes.class);
         adapter = new ArticleAdapter(posts, this);
         lstArtcicles.setAdapter(adapter);
+
         requestArticle();
     }
 
@@ -65,6 +69,46 @@ public class JFYFragment extends Fragment implements ArticleListener {
             @Override
             public void onResponse(Call<List<Post>> call, Response<List<Post>> response) {
                 if (response.isSuccessful()) {
+                    Post post = response.body().get(adapter.getItemCount());
+                    idArtikel = post.getId();
+                    Log.d("id",idArtikel);
+                    posts.addAll(response.body());
+                    adapter.notifyDataSetChanged();
+                    requestMedia(idArtikel);
+                    requestCategory(idArtikel);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Post>> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void requestCategory(String id) {
+        routes.getCategory(id).enqueue(new Callback<List<Post>>() {
+            @Override
+            public void onResponse(Call<List<Post>> call, Response<List<Post>> response) {
+                if (response.isSuccessful()) {
+                    posts.addAll(response.body());
+                    adapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Post>> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void requestMedia(String id) {
+        routes.getMedia(id).enqueue(new Callback<List<Post>>() {
+            @Override
+            public void onResponse(Call<List<Post>> call, Response<List<Post>> response) {
+                if (response.isSuccessful()) {
+                    Log.d("image","load succes");
                     posts.addAll(response.body());
                     adapter.notifyDataSetChanged();
                 }
@@ -81,6 +125,7 @@ public class JFYFragment extends Fragment implements ArticleListener {
     public void onClick(Post post) {
         Intent i = new Intent(getContext(), ArticleDetailActivity.class);
         i.putExtra("title", post.getTitle().getRendered());
+        i.putExtra("category",post.getCategory());
         i.putExtra("content", post.getContent().getRendered());
         startActivity(i);
     }

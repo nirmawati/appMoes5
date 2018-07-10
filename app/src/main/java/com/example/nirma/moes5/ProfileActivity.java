@@ -55,7 +55,7 @@ public class ProfileActivity extends AppCompatActivity {
         FriendsReference = FirebaseDatabase.getInstance().getReference().child("Friends");
         FriendsReference.keepSynced(true);
 
-        NotificationReference = FirebaseDatabase.getInstance().getReference().child("Notification");
+        NotificationReference = FirebaseDatabase.getInstance().getReference().child("Notifications");
         NotificationReference.keepSynced(true);
 
         UserReference = FirebaseDatabase.getInstance().getReference().child("Users");

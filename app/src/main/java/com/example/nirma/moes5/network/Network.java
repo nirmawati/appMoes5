@@ -21,7 +21,7 @@ public class Network {
     //connect to wordpres json api
     public static Retrofit requestWp() {
         return new Retrofit.Builder()
-                .baseUrl("http://192.168.43.228/moes5Article/")
+                .baseUrl("https://moes5article.000webhostapp.com/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
     }

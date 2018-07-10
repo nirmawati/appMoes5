@@ -11,9 +11,12 @@ public class ArticleDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_article_detail);
+
         String title = getIntent().getStringExtra("title");
+        String category = getIntent().getStringExtra("category");
 
         ((TextView) findViewById(R.id.txt_title)).setText(title);
+        ((TextView) findViewById(R.id.txt_title)).setText(category);
 
         ((WebView) findViewById(R.id.wv_post)).loadData(
                 getIntent().getStringExtra("content"),
