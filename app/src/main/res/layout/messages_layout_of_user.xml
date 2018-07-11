@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:background="@drawable/background_pesan2"
     android:padding="5dp">
 
@@ -26,7 +26,7 @@
         android:background="@drawable/message_text_background"
         android:padding="15dp"
         android:text="@string/textview"
-        android:textColor="@android:color/background_light"
+        android:textColor="#000"
         android:textStyle="bold" />
 
     <ImageView
